@@ -22,7 +22,7 @@ test:
       - test.dll
 artifacts:
 #  - path: test.zip
- - path: '\office.fitness-pro.ru\bin\Release\netcoreapp2.2\publish\'
+ - path: '\office.fitness-pro.ru\bin\Debug\netcoreapp2.2\publish\'
    name: office.fitness-pro.ru
 #   type: WebDeployPackage
 clone_depth: 1
