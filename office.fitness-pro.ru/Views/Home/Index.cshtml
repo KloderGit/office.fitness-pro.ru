@@ -1,0 +1,49 @@
+﻿@using crm.service.database
+@model office.fitness_pro.ru.Controllers.VM
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Regular Table with Colors</h4>
+        <p class="category">Here is a subtitle for this table</p>
+    </div>
+    <div class="card-content table-responsive table-full-width">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th width="150">ID</th>
+                    <th width="500">Name</th>
+                    <th width="150">Очное</th>
+                    <th width="500">Country</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Amo)
+                {
+                    <tr class="success">
+                        <td>@item.Key</td>
+                        <td>@item.Value</td>
+                        <td>--</td>
+                        <td>
+                            <select name="hero">
+                                <option disabled>Выберите героя</option>
+                                @foreach (var lc in Model.lC)
+                                {
+                                    <option value="@lc.Guid">@lc.Title</option>
+                                }
+                            </select>
+                        </td>
+                        <td>--</td>
+                    </tr>
+
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

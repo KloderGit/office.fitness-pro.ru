@@ -1,0 +1,81 @@
+﻿@model IEnumerable<crm.service.database.EventLink>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Index</h2>
+    </div>
+
+    <div class="col-md-12">
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title"> Simple Table</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                            <tr>
+                                <th class="text-center">
+                                    #
+                                </th>
+                                <th width="30%">
+                                    Title
+                                </th>
+                                <th>
+                                    Amo Id
+                                </th>
+                                <th>
+                                    1C Guid
+                                </th>
+                                <th>
+                                    Part-Time
+                                </th>
+                                <th class="text-right">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CrmKey)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.lCKey)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PartTime)
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="btn btn-info btn-icon btn-sm " asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-info"></i></a>
+                                        <a class="btn btn-success btn-icon btn-sm " asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a> |
+                                        <a class="btn btn-danger btn-icon btn-sm " asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
