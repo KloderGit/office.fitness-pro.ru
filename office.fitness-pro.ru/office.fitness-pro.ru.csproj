@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\fpa.databases\crm.service.database\crm.service.database.csproj" />
+    <ProjectReference Include="..\..\fpa.databases\Crm.DataBase\Context\Context.csproj" />
   </ItemGroup>
 
 </Project>

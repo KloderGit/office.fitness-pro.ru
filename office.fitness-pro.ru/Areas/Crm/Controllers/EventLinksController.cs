@@ -9,23 +9,26 @@ using crm.service.database;
 using amocrm.library;
 using System.Net.Http;
 using office.fitness_pro.ru.Models;
+using amocrm.library.Interfaces;
 
 namespace office.fitness_pro.ru.Areas.Crm.Controllers
 {
     [Area("Crm")]
     public class EventLinksController : Controller
     {
-        private readonly CrmDataBaseContext _context;
+        private readonly CrmDataBaseContext context;
+        private readonly ICrmManager crm;
 
-        public EventLinksController(CrmDataBaseContext context)
+        public EventLinksController(CrmDataBaseContext context, ICrmManager crm)
         {
-            _context = context;
+            this.context = context;
+            this.crm = crm;
         }
 
         // GET: Crm/EventLinks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Events.ToListAsync());
+            return View(await context.Events.ToListAsync());
         }
 
         // GET: Crm/EventLinks/Details/5
@@ -36,7 +39,7 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
                 return NotFound();
             }
 
-            var eventLink = await _context.Events
+            var eventLink = await context.Events
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (eventLink == null)
             {
@@ -49,8 +52,7 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
         // GET: Crm/EventLinks/Create
         public async Task<IActionResult> Create()
         {
-            var amoCrm = new CrmManager(account: "apfitness", login: "kloder@fitness-pro.ru", pass: "99aad176302f7ea9213c307e1e6ab8fc");
-            var task = await amoCrm.CustomFields.ConfigureAwait(false);
+            var task = await crm.CustomFields.ConfigureAwait(false);
             var seminars = task.Lead[66349].Enums;
             var progs = task.Lead[227457].Enums;
             var result = seminars.Concat(progs);
@@ -61,7 +63,7 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
 
             var lcProgs = await request.Content.ReadAsAsync<IEnumerable<EventsDto>>();
 
-            var events = await _context.Events.ToListAsync();
+            var events = await context.Events.ToListAsync();
 
             var amoKeys = result.Select(k => k.Key);
             var dbKeys = events.Select(k => k.CrmKey);
@@ -111,8 +113,8 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
                 };
 
 
-                _context.Add(dto);
-                await _context.SaveChangesAsync();
+                context.Add(dto);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(eventLink);
@@ -148,7 +150,7 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
                 return NotFound();
             }
 
-            var eventLink = await _context.Events.FindAsync(id);
+            var eventLink = await context.Events.FindAsync(id);
             if (eventLink == null)
             {
                 return NotFound();
@@ -172,8 +174,8 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
             {
                 try
                 {
-                    _context.Update(eventLink);
-                    await _context.SaveChangesAsync();
+                    context.Update(eventLink);
+                    await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -199,7 +201,7 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
                 return NotFound();
             }
 
-            var eventLink = await _context.Events
+            var eventLink = await context.Events
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (eventLink == null)
             {
@@ -214,15 +216,15 @@ namespace office.fitness_pro.ru.Areas.Crm.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eventLink = await _context.Events.FindAsync(id);
-            _context.Events.Remove(eventLink);
-            await _context.SaveChangesAsync();
+            var eventLink = await context.Events.FindAsync(id);
+            context.Events.Remove(eventLink);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EventLinkExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return context.Events.Any(e => e.Id == id);
         }
     }
 }

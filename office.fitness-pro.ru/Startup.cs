@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using amocrm.library;
+using amocrm.library.Interfaces;
 using crm.service.database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +30,8 @@ namespace office.fitness_pro.ru
             services.AddControllersWithViews();
             services.AddDbContext<CrmDataBaseContext>(optition =>
                         optition.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=password"));
+
+            services.AddScoped<ICrmManager>(crm => new CrmManager("","",""));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using amocrm.library;
+using amocrm.library.Interfaces;
 using crm.service.database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -50,11 +51,13 @@ namespace office.fitness_pro.ru.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         CrmDataBaseContext crmDataBase;
+        ICrmManager crm;
 
-        public HomeController(ILogger<HomeController> logger, CrmDataBaseContext crmDataBase)
+        public HomeController(ILogger<HomeController> logger, CrmDataBaseContext crmDataBase, ICrmManager crm)
         {
             _logger = logger;
             this.crmDataBase = crmDataBase;
+            this.crm = crm;
         }
 
         public async Task<IActionResult> Index()
@@ -71,8 +74,7 @@ namespace office.fitness_pro.ru.Controllers
             var lcProgs = await request.Content.ReadAsAsync<IEnumerable<EventsDto>>();
 
 
-            var amoCrm = new CrmManager(account: "apfitness", login: "kloder@fitness-pro.ru", pass: "99aad176302f7ea9213c307e1e6ab8fc");
-            var task = await amoCrm.CustomFields.ConfigureAwait(false);
+            var task = await crm.CustomFields.ConfigureAwait(false);
             var result = task.Lead[66349].Enums;
 
             return View( new VM { Amo = result, lC = lcProgs });
