@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "office.fitness-pro.ru", "office.fitness-pro.ru\office.fitness-pro.ru.csproj", "{DE6269AE-5EA2-4C2F-8E1D-D4108A6F1353}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Context", "..\fpa.databases\Crm.DataBase\Context\Context.csproj", "{3D0CAE20-1A52-4814-875D-863254B829F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "office.fitness-pro.ru", "office.fitness-pro.ru\office.fitness-pro.ru.csproj", "{C9E61FA3-4D1F-4A40-AAF9-B354F745EF9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DE6269AE-5EA2-4C2F-8E1D-D4108A6F1353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE6269AE-5EA2-4C2F-8E1D-D4108A6F1353}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE6269AE-5EA2-4C2F-8E1D-D4108A6F1353}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE6269AE-5EA2-4C2F-8E1D-D4108A6F1353}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D0CAE20-1A52-4814-875D-863254B829F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D0CAE20-1A52-4814-875D-863254B829F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D0CAE20-1A52-4814-875D-863254B829F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D0CAE20-1A52-4814-875D-863254B829F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E61FA3-4D1F-4A40-AAF9-B354F745EF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E61FA3-4D1F-4A40-AAF9-B354F745EF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E61FA3-4D1F-4A40-AAF9-B354F745EF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E61FA3-4D1F-4A40-AAF9-B354F745EF9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

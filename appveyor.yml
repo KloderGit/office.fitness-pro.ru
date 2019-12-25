@@ -1,0 +1,42 @@
+version: '1.0.{build}'
+image: Visual Studio 2017
+branches:
+  only:
+  - master
+init:
+  # Good practice, because Windows line endings are different from Unix/Linux ones
+  - cmd: git config --global core.autocrlf true
+install:
+  # Install repo specific stuff here
+before_build:
+  # Display .NET Core version
+  - cmd: dotnet --version
+  # Display minimal restore text
+  - cmd: dotnet restore --verbosity m
+build_script:
+  # output will be in /.src/{YOUR_PROJECT_DIR}/bin/Debug/netcoreapp2.1/publish/
+  - cmd: dotnet publish ./office.fitness-pro.ru/office.fitness-pro.ru.csproj
+test:
+  assemblies:
+    only:
+      - test.dll
+artifacts:
+#  - path: test.zip
+ - path: '\office.fitness-pro.ru\bin\Release\netcoreapp2.2\publish\'
+   name: office.fitness-pro.ru
+#   type: WebDeployPackage
+clone_depth: 1
+on_finish :
+  # any cleanup in here
+deploy:
+  provider: WebDeploy
+  server: $(WebDeployServer)
+  website: office.fitness-pro.ru
+  username: $(WebDeployUser)
+  password: $(WebDeployUserPassword)
+  ntlm: false
+  aspnet_core: true
+  aspnet_core_force_restart: true
+  app_offline: true
+  remove_files: true
+  artifact:
