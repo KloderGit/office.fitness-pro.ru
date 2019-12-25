@@ -17,19 +17,19 @@ namespace office.fitness_pro.ru
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
             services.AddDbContext<CrmDataBaseContext>(optition =>
-                        optition.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=password"));
+                        optition.UseNpgsql(Configuration.GetSection("ConnectionStrings:CrmDataBase").Value));
 
             services.AddScoped<ICrmManager>(crm => new CrmManager("","",""));
         }
