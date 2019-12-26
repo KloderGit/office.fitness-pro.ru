@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace office.fitness_pro.ru
 {
@@ -28,8 +29,7 @@ namespace office.fitness_pro.ru
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CrmDataBaseContext>(optition =>
-                        optition.UseNpgsql(Configuration.GetSection("ConnectionStrings:CrmDataBase").Value));
+            services.AddDbContext<CrmDataBaseContext>(options => options.UseNpgsql(Configuration.GetSection("ConnectionStrings:CrmDataBase").Value));
 
             services.AddScoped<ICrmManager>(crm => new CrmManager(
                 Configuration.GetSection("AmoCrm:account").Value,
@@ -43,16 +43,19 @@ namespace office.fitness_pro.ru
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //    app.UseHsts();
+            //}
+
+            app.UseDeveloperExceptionPage();
+            app.UseHsts();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
