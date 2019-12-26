@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using amocrm.library;
 using amocrm.library.Interfaces;
@@ -14,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 
 namespace office.fitness_pro.ru
 {
@@ -29,7 +31,22 @@ namespace office.fitness_pro.ru
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CrmDataBaseContext>(options => options.UseNpgsql(Configuration.GetSection("ConnectionStrings:CrmDataBase").Value));
+            //services.AddDbContext<CrmDataBaseContext>(options => options.UseNpgsql(Configuration.GetSection("ConnectionStrings:CrmDataBase").Value));
+
+            services.AddDbContext<CrmDataBaseContext>(options => options.UseNpgsql(
+                Configuration.GetSection("ConnectionStrings:CrmDataBase").Value,
+                builder =>
+                    {
+                        builder.ProvideClientCertificatesCallback(clientCerts =>
+                            {
+                                var clientCertPath = "./root.crt";
+                                // To avoid permission ex run: "sudo chmod -R 777 /home/username/.postgresql/root.crt"
+                                var cert = new X509Certificate2(clientCertPath);
+                                clientCerts.Add(cert);
+                            });
+                    }
+                ));
+
 
             services.AddScoped<ICrmManager>(crm => new CrmManager(
                 Configuration.GetSection("AmoCrm:account").Value,
